@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Log In!</title>
+	<script type="text/javascript" src="../js/logInValidate.js"></script>
+	<link rel="stylesheet" type="text/css" href="../css/home.css">
+</head>
+<body style="background-image: url(../img/boston.jpg)">
+	<a href="../home.php" id="green" style="background-color: black">Return Home</a>
+	<fieldset class="fieldset">
+	<legend id="green" style="background-color: black"> Log In! </legend>
+	<form action="../include/dboperationLogIn.php" method="POST" onsubmit = "return validateLogIn()">
+
+			<div id="green" style="background-color: black">Email:</div><br>
+			<input type="text" name="email" id="email"> <span class="error" id="emailerr"></span><br>
+
+			<div id="green" style="background-color: black">Password:</div><br>
+			<input type="password" name="password1" id="password1"> <span class="error" id="p1err"></span><br>
+
+			<input class="button" type="submit" name="Submit" value="Submit">
+	</form>
+	</fieldset>
+</body>
+</html>

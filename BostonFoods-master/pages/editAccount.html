@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Edit Your Account</title>
+	<script type="text/javascript" src="../js/myAccountValidate2.js"></script>
+	<link rel="stylesheet" type="text/css" href="../css/home.css">
+	<script src="../js/js-cookie-master/src/js.cookie.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+<body style="background-image: url(../img/boston.jpg)">
+
+	<a href="../home.php" id="green" style="background-color: black">return home</a>
+	<fieldset class="fieldset">
+	<legend id="green" style="background-color: black">Edit Your Account</legend>
+	<p style="color:white">Enter your current information for fields you do not wish to change, but enter new information for fields that you do want to change, enter a new password under New Password if you want to change your password, your old one if you don't</p>
+	<form action="../include/editAccount.php" method="POST" onsubmit = "return validate2()">
+			<div style="color:white">First Name:</div><br>
+			<input type="text" name="firstname" id="firstname" > <span class="error" id="firstnameerr"></span><br>
+			<div style="color:white">Last Name:</div><br>
+			<input type="text" name="lastname" id="lastname" > <span class="error" id="lastnameerr"></span><br>
+			<div style="color:white">Phone:</div><br>
+			<input type="text" name="phone" id="phone"> <span class="error" id="phoneerr"></span><br>
+			<div style="color:white">New Password?:</div><br>
+			<input type="password" name="newPass" id="newPass" > <span class="error" id="lastnameerr"></span><br>
+			<div style="color:white">Password:</div><br>
+			<input type="password" name="password1" id="password1"> <span class="error" id="p1err"></span><br>
+			<div style="color:white">Re-Enter Password:</div><br>
+			<input type="password" name="password2" id="password2"> <span class="error" id="p2err"></span><br>
+			<input class="button" type="submit" name="Submit" value="Submit">
+	</form>
+	</fieldset>
+	<fieldset class="fieldset">
+		<legend id="green" style="background-color: black">Delete Account</legend>
+		<form action="../include/deleteAccount.php" method="POST" onsubmit = "return validate3()">
+			<div style="color:white">Password:</div><br>
+			<input type="password" name="password11" id="password11"> <span class="error" id="p11err"></span><br>
+			<div style="color:white">Re-Enter Password:</div><br>
+			<input type="password" name="password22" id="password22"> <span class="error" id="p22err"></span><br>
+			<input class="button" type="submit" name="Submit" value="Delete Account">
+		</form>
+	</fieldset>
+</body>
+</html>

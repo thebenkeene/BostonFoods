@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Delivery Locations</title>
+	<link rel="stylesheet" type="text/css" href="../css/home.css">
+</head>
+<body id="admin">
+	<p class="options" id="deliverytitle">Delivery Locations</p>
+	<a id="green" style="background:black" href="../home.php">return home</a>
+	<fieldset id="fieldset1" class="fieldset">
+	<legend id="delivery1" class="options">Add New Delivery Location</legend>
+	<form action="../include/AddDeliveryLoc.php" method="POST">
+			<p id="nameletters" class="options">Location Name</p><br>
+			<input class="textbox" style="background-color:#FF33CC" type="text" name="name" id="name" > <span class="error" id="nameerr"></span><br>
+			<p id="addressletters" class="options">Location Address</p><br>
+			<input style="background-color:#FF33CC" class="textbox" type="text" name="address" id="address" > <span class="error" id="addresserr"></span><br>
+			<input class= "button" style="color: #FF33CC" type="submit" name="Add" value="Add Location">
+	</form>
+	</fieldset>
+	<br><br>
+	<fieldset id="fieldset2"class="fieldset">
+	<legend id="delivery2"class="options">Delete Delivery Location</legend>
+		<form action="../include/DeleteDeliveryLoc.php" method="POST">
+			<select id="locations" name="locations">
+
+			</select>
+			<input type="submit" class="options" style="background-color:#FF33CC" id="delete" name="Delete" value="Delete Location">
+		</form>
+	</fieldset>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript">
+		$(document).ready(function(){
+
+			$.getJSON( "../include/queryLocations.php" , function(data) {
+					
+							$.each(data, function(i, location){
+								$("#locations").append("<option value=\""+ location.Location_Name + "\">" + location.Location_Name + "</option>");
+							});
+						
+						})
+						.fail(function() {
+								console.log( "getJSON error" );
+						});
+					});
+	</script>
+
+</body>
+</html>

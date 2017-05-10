@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Create an account</title>
+	<script type="text/javascript" src="../js/myAccountValidate.js"></script>
+	<link rel="stylesheet" type="text/css" href="../css/home.css">
+</head>
+<body style="background-image: url(../img/boston.jpg)">
+	<a href="../home.php" id="green" style="background-color: black">return home</a>
+	<fieldset class="fieldset">
+	<legend id="green" style="background-color: black">Create an Account</legend>>
+	<form action="../include/InsertAccount.php" method="POST" onsubmit = "return validate()">
+			<div style="color:white">First Name:</div><br>
+			<input type="text" name="firstname" id="firstname" > <span class="error" id="firstnameerr"></span><br>
+			<div style="color:white">Last Name:</div><br>
+			<input type="text" name="lastname" id="lastname" > <span class="error" id="lastnameerr"></span><br>
+			<div style="color:white">Email:</div><br>
+			<input type="text" name="email" id="email"> <span class="error" id="emailerr"></span><br>
+			<div style="color:white">Phone:</div>
+			<input type="text" name="phone" id="phone"> <span class="error" id="phoneerr"></span><br>
+			<div style="color:white">Password:</div><br>
+			<input type="password" name="password1" id="password1"> <span class="error" id="p1err"></span><br>
+			<div style="color:white">Re-Enter Password:</div><br>
+			<input type="password" name="password2" id="password2"> <span class="error" id="p2err"></span><br>
+			<input class="button" type="submit" name="Submit" value="Submit">
+	</form>
+	</fieldset>
+</body>
+</html>

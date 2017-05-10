@@ -1,0 +1,102 @@
+1. a. Customer creates an account.
+
+Actor: Customer
+precondition: customer visits site (none)
+postcondition: customer has an account
+Query:
+INSERT INTO CUSTOMERS (ID, FirstName, LastName, Phone, Email, Password) VALUES (1, 'Jon', 'Snow', '1231231234', 'LordCommander@gmail.com', 'WinterIsComing');
+
+b. Customer changes their password
+
+Actor: Customer
+precondition: customer has been sent an email with a code they can use to update their password
+postcondition: customer has a new password
+Query:
+UPDATE CUSTOMERS SET Password = "WinterIsHere" WHERE ID = 1;
+
+c. Customer deletes their account
+
+Actor: Customer
+precondition: customer is logged in
+postcondition: customer is logged out and their account is deleted
+Query:
+DELETE FROM CUSTOMERS WHERE ID = 1;
+
+d. Customer Updates Account Info:
+
+Actor: Customer
+Precondition: Customer is logged
+Postcondition: Customer changes account information
+Query:(Say customer wants to change first name)
+UPDATE CUSTOMERS SET FirstName = ‘Fred’ WHERE FirstName = John;
+
+
+2. a. Add a delivery to the delivery schedule
+
+Actor: Admin
+precondition: logged in as admin
+postcondition: delivery is added to the schedule
+Query:
+INSERT INTO DELIVERY_SCHEDULE (Date, Time, LocationName, LocationAddress) VALUES ("May 2, 2016", "5pm", "CSLab", "140 Commonwealth Ave, Chestnut Hill MA, 02135");
+
+b. Update a delivery in the delivery schedule
+
+Actor: Admin
+precondition: logged in as admin
+postcondition: a delivery has some of its information updated
+Query:
+UPDATE DELIVERY_SCHEDULE SET LocationAddress = "35 South Street, Brighton MA, 02135", LocationName = "The House" WHERE Date = "May 2, 2016" AND Time = "5pm";
+
+c. Delivery is cancelled
+
+Actor: Admin
+precondition: logged in as Admin
+postcondition: Deliver is cancelled and deleted from the schedule
+Query:
+DELETE FROM DELIVERY_SCHEDULE WHERE LocationName = "CSlab" AND LocationAddress = "140 Commonwealth Ave., Chestnut Hill MA, 02135" AND Date = "May 2, 2016" AND Time = "5pm";
+
+3. a. Customer Places an order
+
+Actor: Customer
+precondition: logged in 
+postcondition: customer's order is added to the CURRENT_ORDERS table
+Query:
+INSERT INTO CURRENT_ORDERS (PickUpDate, FirstName, LastName, CustID, BoxType, Quantity, Price, DeliveryLocation) VALUES ("May 2, 2016", "Jon", "Snow", 1, "LargeBox", 2, 50, "140 Commonwealth Ave., Chestnut Hill MA, 02135");
+
+b. Customer cancels an order
+
+Actor: Customer
+precondition: logged in as customer
+postcondition: customer's order is cancelled and removed from the CURRENT_ORDERS table
+Query:
+DELETE FROM CURRENT_ORDERS WHERE CustID = "1";
+
+4. a. New Delivery Location is added
+
+Actor: Admin
+precondition: logged in as Admin
+postcondition: new delivery location added to the DELIVERY_LOCATIONS table
+Query:
+INSERT INTO DELIVERY_LOCATIONS (LocationName, LocationAddress) VALUES (“LocName”, “LocAddress”);
+
+b. Delivery Location is deleted
+
+Actor: Admin
+precondition: logged in as Admin
+postcondition: delivery location loc is removed from the DELIVERY_LOCATIONS table
+Query: 
+DELETE * FROM DELIVERY_LOCATIONS WHERE LocationName = “loc”;
+
+5. a. Account is upgraded to Admin
+
+precondition: logged in as Admin
+postcondition: the IsAdmin column value is changed for an account to 1
+Query: 
+UPDATE `CUSTOMERS` SET `IsAdmin`=1 WHERE `ID` = '$id';
+
+b. Account is downgraded from Admin
+
+precondition: logged in as Admin
+postcondition: the IsAdmin column value is changed for an account to 0
+Query: 
+UPDATE `CUSTOMERS` SET `IsAdmin`=0 WHERE `ID` = '$id';

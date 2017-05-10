@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Place an Order</title>
+	<link rel="stylesheet" type="text/css" href="../css/home.css">
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBI_dSpZdUtWk8a9FzR3fNnwnO-4aYZctg"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	
+	<script src="../js/js-cookie-master/src/js.cookie.js"></script>
+	
+	<style>
+		#map {
+			height: 500px;
+			width: 500px;
+			float: left;
+
+		}
+		#cOFieldset {
+			position: relative;
+			float: right;
+			top: -270px;
+		}
+	</style>
+</head>
+<body id="placeOrder"  >
+	<a  class="options" href="../home.php">return home</a>
+	<h1 id="greentitle"> Order </h1>
+	<fieldset class="fieldset">
+	<legend id="green" style="background-color: black">Place a new order!</legend>
+	<form action="../include/dboperationOrder.php" method="POST">
+			<input type="hidden" name="firstName" id="firstName">
+			<input type="hidden" name="lastName" id="lastName">
+			<input type="hidden" name="ID" id="ID">
+
+			<p  id="green" >Box Type: </p>
+			<select id="box" name="box"></select><input type="number" name="quantity" min="1" max="10" value="1" required>
+			<br>
+
+			<p id="green">Delivery :</p><select id="scheduleDrop" name="schedule">
+			</select><br>
+			<script>
+			$(document).ready(function(){
+			map = new google.maps.Map(document.getElementById('map'), {
+          							center: {lat: 42.3467, lng: -71.0972},
+         					 		zoom: 12 });
+			$.getJSON( "../include/queryDeliveries.php" , function(data) {
+
+							var geocoder = new google.maps.Geocoder();
+							$.each(data, function(i, delivery){
+								$("#scheduleDrop").append("<option value ="+"\""+delivery.LocationName+"|"+delivery.DateT+"\">"+delivery.LocationName+" "+delivery.DateT+" "+delivery.TimeT+" "+delivery.LocationAddress+"</option>");
+								var address = delivery.LocationAddress;
+								var title = delivery.LocationName;
+								geocoder.geocode({'address': address}, function(results, status) {
+							          if (status === google.maps.GeocoderStatus.OK) {
+							            map.setCenter(results[0].geometry.location);
+							            var marker = new google.maps.Marker({
+							              map: map,
+							              position: results[0].geometry.location,
+							              title: title							            });
+							          } else {
+							            alert('Geocode was not successful for the following reason: ' + status);
+							          }
+							        });
+								
+
+							});
+						
+						})
+						.fail(function() {
+								console.log( "getJSON error - delivery Schedule" );
+						});
+			
+					});
+			</script>
+			<script>
+			$(document).ready(function(){
+				$("#firstName").val(Cookies.get("firstName"));
+				$("#lastName").val(Cookies.get("lastName"));
+				$("#ID").val(Cookies.get("ID"));
+			});
+			</script>
+			<script>
+			$(document).ready(function(){
+
+			$.getJSON( "../include/queryBoxes.php" , function(data) {
+
+				
+							$.each(data, function(i, box){
+								$("#box").append("<option value ="+"\""+box.BoxName+"|"+box.Price+"\">"+box.BoxName+" $"+box.Price+"</option>");
+								
+
+							});
+							})
+						.fail(function() {
+								console.log( "getJSON error - boxes" );
+						});
+			var cookieID = (Cookies.get("ID"))+"";
+
+			//console.log(cookieID);
+			$("#hiddenID").val(cookieID);
+			$.getJSON( "../include/queryOrders.php",{id:cookieID}).done(function(data) {
+
+
+							$.each(data,function(i, order){
+								//console.log(order);
+								if(i == 0) {
+									$("#cOSelect").html("<option value="+"\""+order.BoxType+"|"+order.Quantity+"|"+order.DeliveryLocation+"|"+order.PickupDate+"\""+">"+order.Quantity+" "+order.BoxType+" at "+order.Price+" per box, pickup: "+order.DeliveryLocation+" on "+order.PickupDate+"</option>");
+									$("#buttonDiv").html("<input type=\"submit\" class=\"button\" value=\"Click to Delete this order\">");
+								} else {
+								    $("#cOSelect").append("<option value="+"\""+order.BoxType+"|"+order.Quantity+"|"+order.DeliveryLocation+"|"+order.PickupDate+"\""+">"+order.Quantity+" "+order.BoxType+" at "+order.Price+" per box, pickup: "+order.DeliveryLocation+" on "+order.PickupDate+"</option>");
+								    $("#buttonDiv").html("<input type=\"submit\" class=\"button\" value=\"Click to Delete this order\">");
+								}
+
+							});
+							})
+						.fail(function() {
+								console.log( "getJSON error - currentOrders" );
+						});
+
+					});
+			</script>
+			<input class="button" type="submit" value="submit order">
+			</form>
+	</fieldset>
+	
+	<fieldset class="fieldset" id="cOFieldset">
+		<legend id="green" style="background-color: black">Current Orders</legend>
+		<form action="../include/dboperationDeleteOrder.php" method="POST">
+		<br>
+		<input type="hidden" name="id" id="hiddenID"/>
+			<select id="cOSelect" name="cOSelect">
+				<option>No Current Orders</option>
+			
+			</select>
+			<br>
+			<div id="buttonDiv"></div>
+			</form>
+	</fieldset>
+
+	<div id="map"></div>
+
+</body>
+</html>
+
+<!--Google Maps API key: AIzaSyBI_dSpZdUtWk8a9FzR3fNnwnO-4aYZctg-->

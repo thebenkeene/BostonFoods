@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Delivery Schedule</title>
+	<link rel="stylesheet" type="text/css" href="../css/home.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  	<style>
+  	table td, table th {
+    border: 1px solid red;
+}
+  	</style>
+</head>
+<body style="background-image: url(../img/boston.jpg)">
+	<a id="green" href="../home.php" style="background:black">return home</a>
+	<fieldset class="fieldset" style="width:100%">
+	<legend id="green" style="background-color: black">Current Orders</legend>
+	<table id="ordersTable">
+		<tr style="background-color: black;color:white"><th>Name</th><th>Box Type</th><th>Quantity</th><th>Price</th><th>Pick Up Date</th><th>Delivery Location</th></tr>
+	</table>
+	</fieldset>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript">
+		$(document).ready(function buildTable(){
+
+			$.getJSON( "../include/queryOrders.php" , function(data) {
+					
+							$.each(data, function(i, order){
+								$("#ordersTable").append("<tr id=\"green\" style=\"background-color: black\"><<td>" + order.FirstName + order.LastName + "</td><td>" + order.BoxType + "</td><td>" + order.Quantity + "</td><td>" + order.Price + "</td><td>" + order.PickupDate + "</td><td>" + order.DeliveryLocation + "</td></tr>");
+							});
+						
+						})
+						.fail(function() {
+								console.log( "getJSON error" );
+						});
+					});
+	</script>
+	<br><br>
+	<form action="../include/insertDelivery.php" method="POST">
+	<fieldset class="fieldset" style="width:100%">
+	<legend id ="green" style="background-color: black">Add Delivery</legend>
+		<div style="color:white">Location:<div>
+		<select id="locations" class= "button" name="name">
+			
+		</select><br>
+		<div style="color:white">Date of Delivery:</div>
+		<input type="date" name="date"><br>
+		<div style="color:white">Time of Delivery:</div>
+		<input type="time" name="time"><br>
+		<input type="submit" class= "button" name="addDelivery" value="Add Delivery to Schedule">
+	</fieldset>
+	</form>
+
+    <script type="text/javascript">
+		$(document).ready(function(){
+
+			$.getJSON( "../include/queryLocations.php" , function(data) {
+					
+							$.each(data, function(i, location){
+								$("#locations").append("<option value=\""+ location.Location_Name + "\">" + location.Location_Name + "</option>");
+							});
+						
+						})
+						.fail(function() {
+								console.log( "getJSON error" );
+						});
+					});
+	</script>
+
+	<br><br>
+	<fieldset class = "fieldset" style="width:100%">
+	<legend id="green" style="background-color: black">Deliveries</legend>
+	<table id="deliveries">
+		<tr style="color:white"><th>Click to Delete</th><th>Date</th><th>Time</th><th>Location Name</th><th>Location Address</th></tr>
+	</table>
+	</fieldset>
+
+	<script type="text/javascript">
+		// 	function toDelete(name, date, time) {
+		// 	//window.location.assign("../include/deleteDelivery.php?name="+name+"&date="+date+"&time="+time);
+		// 	console.log("test");
+		// }
+		$(document).ready(function(){
+
+			$.getJSON( "../include/queryDeliveries.php" , function(data) {
+					
+							$.each(data, function(i, delivery){
+
+								$("#deliveries").append("<tr id=\"green\" style=\"background-color: black\"><td><a style=\"color:white\" href=\"../include/deleteDelivery.php?name="+delivery.LocationName+"&date="+delivery.DateT+"&time="+delivery.TimeT+"\">DELETE</a></td><td>" + delivery.DateT + "</td><td>" + delivery.TimeT + "</td><td>" + delivery.LocationName + "</td><td>" + delivery.LocationAddress + "</td></tr>");
+
+							});
+						
+						})
+						.fail(function() {
+								console.log( "getJSON error" );
+						});
+					});
+	</script>
+
+</body>
+</html>
+

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Forgot Password?</title>
+	<script type="text/javascript" src="../js/myAccountValidate2.js"></script>
+	<link rel="stylesheet" type="text/css" href="../css/home.css">
+	<script src="../js/js-cookie-master/src/js.cookie.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+<body style="background-image: url(../img/boston.jpg)">
+
+	<a href="../home.php" id="green" style="background-color: black">return home</a>
+
+	<fieldset class="fieldset">
+		<legend id="green" style="background-color: black">Forgot Password?</legend>
+		<form action="../include/forgotPass.php" method="POST">
+			<div style="color:white">Email:</div><br>
+			<input type="text" name="email" id="email"><br>
+			<input class="button" type="submit" name="Submit" value="Send New Password">
+		</form>
+	</fieldset>
+</body>
+</html>
